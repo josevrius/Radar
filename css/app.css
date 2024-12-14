@@ -1,0 +1,119 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+#container {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: #001413;
+}
+
+/* Radar */
+#container > .radar {
+  --radar-size: 30rem;
+  --radar-color: #15fcd8;
+
+  width: var(--radar-size);
+  height: var(--radar-size);
+  border: solid 0.3rem var(--radar-color);
+  border-radius: 50%;
+  background-image:
+    /* Guides */
+    linear-gradient(transparent 0 49.7%, var(--radar-color) 49.7% 50.3%, transparent 50.3% 100%),
+    linear-gradient(to right, transparent 0 49.7%, var(--radar-color) 49.7% 50.3%, transparent 50.3% 100%),
+    /* Sections */
+    radial-gradient(transparent 0 25%, var(--radar-color) 25.3% 25.7%, transparent 26% 50%, var(--radar-color) 50.3% 50.7%, transparent 51.3% 75%, var(--radar-color) 75% 76%, transparent 76% 100%),
+    /* Background */
+    radial-gradient(#00767233, #002421 75%), 
+    /* Grid */
+    repeating-linear-gradient(#0e817a80 0 1px, transparent 1px 1.4rem), 
+    repeating-linear-gradient(to right, #0e817a80 0 1px, transparent 1px 1.4rem),
+    /* Background */
+    radial-gradient(#007672, #002421 65%);
+  position: relative;
+  mix-blend-mode: difference;
+}
+
+/* Pulse */
+#container > .radar::before {
+  --pulse-color: color-mix(in srgb, var(--radar-color), transparent 80%);
+
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--pulse-color);
+  border-radius: 50%;
+  position: absolute;
+  filter: blur(0.5rem);
+  animation: pulse 4s infinite;
+}
+
+@keyframes pulse {
+  from {
+    scale: 1;
+    opacity: 0.4;
+  }
+  to {
+    scale: 1.2;
+    opacity: 0;
+  }
+}
+
+/* Scanner */
+#container > .radar::after {
+  --scanner-color: color-mix(in srgb, var(--radar-color), transparent 50%);
+
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-image: conic-gradient(transparent, var(--scanner-color) 0.1turn 0.15turn, transparent 0.25turn 1turn);
+  border-radius: 50%;
+  mix-blend-mode: plus-lighter;
+  animation: scanner 4s linear infinite;
+}
+
+@keyframes scanner {
+  from {
+    rotate: -0.125turn;
+  }
+  to {
+    rotate: 0.875turn;
+  }
+}
+
+#container > .radar > .dot {
+  --dot-size: 1rem;
+
+  width: var(--dot-size);
+  height: var(--dot-size);
+  background-color: var(--radar-color);
+  border-radius: 50%;
+  opacity: 50%;
+  filter: blur(0.1rem);
+  position: absolute;
+  left: var(--x);
+  bottom: var(--y);
+  animation: dot 4s ease-out forwards;
+}
+
+@keyframes dot {
+  to {
+    opacity: 0;
+  }
+}
